@@ -101,7 +101,6 @@ typedef u32 tile[256];
 i32 main(i32 numArguments, char** arguments)
 {
 
-
 	tile x = { 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
 		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
 		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
@@ -297,20 +296,42 @@ i32 main(i32 numArguments, char** arguments)
 	CloseHandle(tmHandle);
 
 
-	u64 sizeOfTile = sizeof(u32)* tmTile.width * tmTile.height;
+	u64 tileElementCount = tmTile.width * tmTile.height;
+	u64 sizeOfTile = sizeof(u32) * tileElementCount;
 	u64 numTileColumns = tmBGRADataWidth / tmTile.width;
 	u64 numTileRows = tmBGRADataHeight / tmTile.height;
-	u32* tilesMem = (u32*)malloc(sizeOfTile * numTileColumns * numTileRows);
+	u32* tileData = (u32*)malloc(sizeOfTile * numTileColumns * numTileRows);
 
 
 	for (u64 row = 0; row < numTileRows; ++row)
 	{
 		for (u64 column = 0; column < numTileColumns; ++column)
 		{
+			u32* tile = tileData + (tileElementCount*numTileColumns*row) + (tileElementCount*column);
+			
+			for (u64 h = 0; h < tmTile.height; ++h)
+			{
+				for (u64 w = 0; w < tmTile.width; ++w)
+				{
+					u32* tilePx = tile + (h*tmTile.width) + w;
+					u32* tmPx = tmBGRAData + (((row*tmTile.height) + h) * tmBGRADataWidth) + ((column*tmTile.width) + w);
 
+					*tilePx = *tmPx;
+				}
+			}
+			//*tile = 0x11111111;
 		}
 	}
 
+	u64 n = 0;
+	for (u64 i = 0; i < tileElementCount * numTileColumns * numTileRows; ++i)
+	{
+		if (*(tileData + i) == 0x11111111)
+		{
+			++n;
+		}
+	}
+	n;
 
 	// cut it up into screens
 		// subtract the offsets 
