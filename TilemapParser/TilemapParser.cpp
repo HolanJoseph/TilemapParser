@@ -98,6 +98,14 @@ u32 padVal(u32 x, u32 padTo)
 
 typedef u32 tile[256];
 
+struct tileLink
+{
+	u32* data;
+	tileLink* next;
+};
+
+
+
 i32 main(i32 numArguments, char** arguments)
 {
 
@@ -323,15 +331,57 @@ i32 main(i32 numArguments, char** arguments)
 		}
 	}
 
-	u64 n = 0;
-	for (u64 i = 0; i < tileElementCount * numTileColumns * numTileRows; ++i)
+// 	u64 n = 0;
+// 	for (u64 i = 0; i < tileElementCount * numTileColumns * numTileRows; ++i)
+// 	{
+// 		if (*(tileData + i) == 0x11111111)
+// 		{
+// 			++n;
+// 		}
+// 	}
+
+	tileLink tile1 = { 0 };
+	tile1.data = tileData;
+	tile1.next = NULL;
+
+	tileLink tile2 = { 0 };
+	tile2.data = tileData + tileElementCount;
+	tile2.next = NULL;
+
+	tile1.next = &tile2;
+
+	tileLink* uniqueList = (tileLink*)malloc(sizeof(tileLink));
+	uniqueList->data = tileData;
+	uniqueList->next = NULL;
+
+	for (u32* tile = tileData; tile < tileData + (tileElementCount * 11/*numTileColumns * numTileRows*/); tile += tileElementCount)
 	{
-		if (*(tileData + i) == 0x11111111)
+		bool isUnique = true;
+		for (tileLink* uniqueTile = uniqueList; uniqueTile != NULL && isUnique; uniqueTile = uniqueTile->next)
 		{
-			++n;
+			u64 numSimilarPx = 0;
+			for (u64 pxnumber = 0; pxnumber < tileElementCount; ++pxnumber)
+			{
+				if ( tile[pxnumber] == uniqueTile->data[pxnumber])
+				{
+					++numSimilarPx;
+				}
+			}
+			if ( numSimilarPx == tileElementCount)
+			{
+				isUnique = false;
+			}
+		}
+		if (isUnique)
+		{
+			tileLink* tl = (tileLink*)malloc(sizeof(tileLink));
+			tl->data = tile;
+			tl->next = uniqueList;
+			uniqueList = tl;
 		}
 	}
-	n;
+
+
 
 	// cut it up into screens
 		// subtract the offsets 
