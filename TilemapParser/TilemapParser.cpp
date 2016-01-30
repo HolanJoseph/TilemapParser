@@ -18,6 +18,7 @@ using std::cout;
 using std::endl;
 
 #include <cstdlib>
+#include <cstdio>
 
 struct Tile {
 	u32 width;
@@ -108,73 +109,31 @@ struct tileLink
 
 i32 main(i32 numArguments, char** arguments)
 {
-
-	tile x = { 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x22222222, 
-		0x11111111, 0x22222222, 0x11111111, 0x22222222, 0x11111111, 0x99999999
-	};
-	
-	u32 (*x2)[256] = (u32(*)[256])malloc(sizeof(tile));
-	for (u64 i = 0; i < 256; ++i)
-	{
-		(*x2)[i] = x[i];
-	}
-
 	char* tilemapFilename = NULL;
-	
-	u32 screenWidth = 0;
-	u32 screenHeight = 0;
 	
 	Tile tmTile;
 	tmTile.width = 0;
 	tmTile.height = 0;
 
 	Offsets tmOffsets;
-	tmOffsets.left = 0;
-	tmOffsets.right = 0;
 	tmOffsets.top = 0;
+	tmOffsets.right = 0;
 	tmOffsets.bottom = 0;
+	tmOffsets.left = 0;
 
-	if (numArguments == 10)
+	if (numArguments == 8)
 	{
 		tilemapFilename = *(arguments + 1);
 		
-		screenWidth = (u32)atoi(*(arguments + 2));
-		screenHeight = (u32)atoi(*(arguments + 3));
-		
-		tmTile.width = (u32)atoi(*(arguments + 4));
-		tmTile.height = (u32)atoi(*(arguments + 5));
+		tmTile.width = (u32)atoi(*(arguments + 2));
+		tmTile.height = (u32)atoi(*(arguments + 3));
 
-		tmOffsets.left = (u32)atoi(*(arguments + 6));
-		tmOffsets.right = (u32)atoi(*(arguments + 9));
-		tmOffsets.top = (u32)atoi(*(arguments + 7));
-		tmOffsets.bottom = (u32)atoi(*(arguments + 8));
+		tmOffsets.top = (u32)atoi(*(arguments + 4));
+		tmOffsets.right = (u32)atoi(*(arguments + 5));
+		tmOffsets.bottom = (u32)atoi(*(arguments + 6));
+		tmOffsets.left = (u32)atoi(*(arguments + 7));
 
 		cout << "Tilemap: " << tilemapFilename << endl;
-		cout << "Screen Dimensions: " << screenWidth << " x " << screenHeight << endl;
 		cout << "Tile Dimensions: " << tmTile.width << " x " << tmTile.height << endl;
 		cout << "Offsets (TRBL): " << tmOffsets.top << " " << tmOffsets.right << " " << tmOffsets.bottom << " " << tmOffsets.left << endl;
 	}
@@ -381,6 +340,94 @@ i32 main(i32 numArguments, char** arguments)
 		}
 	}
 
+	u64 uniqueCount = 0;
+	for (tileLink* curr = uniqueList; curr != NULL; curr = curr->next)
+	{
+		char tileNumberString[6];
+		_snprintf_s(tileNumberString, 6, _TRUNCATE, "%u", ++uniqueCount);
+		char* tileFilename = "tile";
+		char* tileFilenameExtension = ".bmp";
+
+		char tileFullFilename[6 + 4 + 4];
+		_snprintf_s(tileFullFilename, 6+4+4, _TRUNCATE, "%s%s%s", tileFilename, tileNumberString, tileFilenameExtension);
+
+		HANDLE tileHandle = CreateFile(
+			tileFullFilename,
+			GENERIC_WRITE,
+			0,
+			NULL,
+			CREATE_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL,
+			NULL
+			);
+
+		BMPFileHeader tileFileHeader = { 0 };
+		tileFileHeader.FileType = 0x4D42;
+		tileFileHeader.FileSize = sizeof(BMPFileHeader)+sizeof(BMPDataHeader)+(sizeof(u32)*tileElementCount);
+		tileFileHeader.Reserved1 = 0;
+		tileFileHeader.Reserved2 = 0;
+		tileFileHeader.BitmapOffset = sizeof(BMPFileHeader)+sizeof(BMPDataHeader);
+
+		BMPDataHeader tileDataHeader = { 0 };
+		tileDataHeader.Size = 108;
+		tileDataHeader.Width = tmTile.width;
+		tileDataHeader.Height = tmTile.height;
+		tileDataHeader.Planes = 1;
+		tileDataHeader.BitsPerPixel = 32;
+		tileDataHeader.Compression = 0;
+		tileDataHeader.SizeOfBitmap = 0;
+		tileDataHeader.HorzResolution = tmDataHeader.HorzResolution;
+		tileDataHeader.VertResolution = tmDataHeader.VertResolution;
+		tileDataHeader.ColorsUsed = 0;
+		tileDataHeader.ColorsImportant = 0;
+		tileDataHeader.RedMask = 0x00ff0000;
+		tileDataHeader.GreenMask = 0x0000ff00;
+		tileDataHeader.BlueMask = 0x000000ff;
+		tileDataHeader.AlphaMask = 0xff000000;
+		tileDataHeader.CSType = 0x01;
+		tileDataHeader.RedX = 0;
+		tileDataHeader.RedY = 0;
+		tileDataHeader.RedZ = 0;
+		tileDataHeader.GreenX = 0;
+		tileDataHeader.GreenY = 0;
+		tileDataHeader.GreenZ = 0;
+		tileDataHeader.BlueX = 0;
+		tileDataHeader.BlueY = 0;
+		tileDataHeader.BlueZ = 0;
+		tileDataHeader.GammaRed = 0;
+		tileDataHeader.GammaGreen = 0;
+		tileDataHeader.GammaBlue = 0;
+
+		DWORD numBytesWritten = 0;
+		BOOL tfhw = WriteFile(
+			tileHandle,
+			&tileFileHeader,
+			sizeof(tileFileHeader),
+			&numBytesWritten,
+			NULL
+			);
+
+		BOOL tdhw = WriteFile(
+			tileHandle,
+			&tileDataHeader,
+			sizeof(tileDataHeader),
+			&numBytesWritten,
+			NULL
+			);
+
+		BOOL tdw = WriteFile(
+			tileHandle,
+			curr->data,
+			sizeof(u32)* tileElementCount,
+			&numBytesWritten,
+			NULL
+			);
+
+
+		CloseHandle(tileHandle);
+
+	}
+	cout << uniqueCount << " unique tiles found" << endl;
 
 
 	// cut it up into screens
